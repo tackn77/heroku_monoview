@@ -45,3 +45,5 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 gem 'execjs'
+
+gem 'nokogiri'
