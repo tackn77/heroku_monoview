@@ -11,9 +11,9 @@ today = Date.today
 </p>
 
 <%
- require 'nokogiri'
- require 'open-uri'
- require 'nkf'
+require 'nokogiri'
+require 'open-uri'
+require 'nkf'
 
 re = Regexp.new("[^>]+/(HA|KA)([0-9]+)\\.pdf")
 doc = Nokogiri::HTML
@@ -27,21 +27,31 @@ doc = Nokogiri::HTML(open('http://chiba-monorail.co.jp/index.php/info-timetable/
 %>
 <p>モノちゃん号取得</p>
 <%
+@month = 0
 doc.xpath("//table[@class='mono-time']//td/a").each do |i|
-  
-  /(1?[0-9]?\/)?([0-9]+)/ =~ NKF.nkf('-m0Z1 -w', i.text)
-%><%= "day: " + $2 %><%
+
+  /((1?[0-9]?)\/)?([0-9]+)/ =~ NKF.nkf('-m0Z1 -w', i.text)
+  if @month == 0 && $2==nil
+    @month = 0
+    elsif $2==nil 
+    @month = @month
+    else
+    @month = $2
+    end
+%><%=@month %><br/><%
+%><%= "day: " + $3 %><br/><%
   re =~ i.attribute("href").value %>
-<%="tyep: " + $1 %>
-<%="tableNo: "  + $2%> 
-<br/>
+  <%="tyep: " + $1 %><br/>
+  <%="tableNo: "  + $2%> <br/>
+  <br/>
 <%
-end
+  end
 %> <br/><br/>
 <p>URBAN取得</p>
 <%
 # URBAN
 # とりあえず目的の数値が取れそうな所までは追い込んだ
+@month = 0
 doc.xpath("//table[@class='urban-time']//tr//a").each do |node|
   #    puts node.attribute("href").value
 
@@ -49,19 +59,27 @@ doc.xpath("//table[@class='urban-time']//tr//a").each do |node|
   re =~  node.attribute("href").value
   type = NKF.nkf('-m0Z1 -w', $1)
   tableNo = NKF.nkf('-m0Z1 -w', $2)
-    
+
   count = node.xpath("count(ancestor::td/preceding-sibling::td)") 
   day =  node.xpath("ancestor::tr[position()=1]/preceding-sibling::tr[position()=1]/td[position()=" + ((count-1) / 4 +1).to_i.to_s+ "]/text()") 
- 
-  /(1?[0-9]\/)?([0-9]+)[^\/]+/ =~ NKF.nkf('-m0Z1 -w',day.to_s)
-  %><%= "day: " + $2 %><%
-  
-  %><%= "traknNo: " + trainNo %><%
-  %><%= "type: " +type %><%
-  %><%= "tableNo: " + tableNo  %><%
-  
-  %><br/><%
-end
+
+  /((1?[0-9])\/)?([0-9]+)[^\/]+/ =~ NKF.nkf('-m0Z1 -w',day.to_s)
+  if @month == 0 && $2==nil
+    @month = 0
+    elsif $2==nil 
+    @month = @month
+    else
+    @month = $2
+    end
+%><%=@month %><br/><%
+%><%= "day: " + $3 %><br/><%
+
+%><%= "traknNo: " + trainNo %><br/><%
+%><%= "type: " +type %><br/><%
+%><%= "tableNo: " + tableNo  %><br/><%
+
+%><br/><%
+  end
 %>
 
 
