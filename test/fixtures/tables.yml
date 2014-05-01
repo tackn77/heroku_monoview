@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  month: 1
+  day: 1
+  holiday: false
+  train: 1
+  table: 1
+
+two:
+  month: 1
+  day: 1
+  holiday: false
+  train: 1
+  table: 1

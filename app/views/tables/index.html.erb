@@ -1,0 +1,28 @@
+<h1>Listing tables</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>月</th>
+      <th>日</th>
+      <th>列車No.</th>
+      <th>時刻表No.</th>
+      <th>祝日</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tables.each do |table| %>
+      <tr>
+        <td><%= table.month %></td>
+        <td><%= table.day %></td>
+        <td><%= table.train %></td>
+        <td><%= table.table %></td>
+        <td><%= table.holiday %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'New Tables', new_table_path %>
