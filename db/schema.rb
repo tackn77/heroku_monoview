@@ -13,13 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140501143340) do
 
-  create_table "products", force: true do |t|
-    t.string   "name"
-    t.integer  "price"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "tables", force: true do |t|
     t.integer  "month"
     t.integer  "day"
