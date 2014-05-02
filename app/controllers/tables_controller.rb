@@ -114,7 +114,7 @@ class TablesController < ApplicationController
  #今日の運行情報を返す 
   def today
     #今日作成のレコードが無かったら取得を実行
-    if !Table.exists?(:created_at => Date.today.beginning_of_day..Date.today.end_of_day)
+    if Table.exists?(:created_at => Date.today.beginning_of_day..Date.today.end_of_day)
       new
     end
     #今日の運行情報を取得
