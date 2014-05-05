@@ -1,5 +1,6 @@
 class TablesController < ApplicationController
-
+  #
+  @@lock = Mutex.new
   # 時刻表取得部分
   # データベースへ逐次保存
   def new
@@ -104,18 +105,20 @@ class TablesController < ApplicationController
     end
     tables = Table.where(:month=>"0")
     tables.update_all(:month=>beginning_month)
-  end   
+  end
 
   #すべての運行情報を返す
   def index
     @tables = Table.all
   end
 
- #今日の運行情報を返す 
+  #今日の運行情報を返す 
   def today
+    @@lock.synchronize do
     #今日作成のレコードが無かったら取得を実行
-    if !Table.exists?(:created_at => Date.today.beginning_of_day..Date.today.end_of_day)
-      new
+      if !Table.exists?(:created_at => Date.today.beginning_of_day..Date.today.end_of_day)
+        new
+      end
     end
     #今日の運行情報を取得
     today = Date.today
@@ -127,4 +130,4 @@ class TablesController < ApplicationController
       format.xml{render :xml =>@tables}
     end
   end
-end
+end  
