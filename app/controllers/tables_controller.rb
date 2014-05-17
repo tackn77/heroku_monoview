@@ -10,7 +10,7 @@ class TablesController < ApplicationController
     Table.all.destroy_all
 
     # 日付情報取得する正規表現
-    re_date = Regexp.new("((1?[0-9]?)\/)?([0-9]+)")
+    re_date = Regexp.new("((1?[0-9])\/)?([0-9]+)")
     #リンクされているPDFアンカーから情報を取得する正規表現
     re_pdf = Regexp.new("[^>]+/(HA|KA)([0-9]+)\\.pdf")
     
@@ -122,7 +122,7 @@ class TablesController < ApplicationController
     end
     #今日の運行情報を取得
     today = Date.today
-    @tables = Table.where(:month=>today.month,:day=>today.day)
+    @tables = Table.where(:day=>today.day)
     #取得結果をViewへ返す
     respond_to do |format|
       format.html
