@@ -12,7 +12,7 @@ class TablesController < ApplicationController
     # 日付情報取得する正規表現
     re_date = Regexp.new("((1?[0-9])\/)?([0-9]+)")
     #リンクされているPDFアンカーから情報を取得する正規表現
-    re_pdf = Regexp.new("[^>]+/(HA|KA)([0-9]+)\\.pdf")
+    re_pdf = Regexp.new("[^>]+/(HA|KA)([0-9]+)(_[0-9]+)?\\.pdf")
     
     #nokogiriを使った運行情報の取得処理
     require 'nokogiri'
